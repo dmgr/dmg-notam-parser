@@ -1,29 +1,20 @@
 # Notam::Parser
 
-TODO: Write a gem description
+A gem to parse ICAO code and aerodrome hours of ops/service.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'notam-parser'
+    gem 'dmg-notam-parser', git: 'https://github.com/dmgr/dmg-notam-parser.git'
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install notam-parser
-
 ## Usage
 
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/notam-parser/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+    require 'dmg/notam/record'
+    notam_record = Dmg::Notam::Record.new notam_raw_text
+    p notam_record.icao_code
+    p notam_record.opening_hours
