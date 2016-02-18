@@ -1,4 +1,4 @@
-# Notam::Parser
+# NOTAM parser
 
 A gem to parse ICAO code and aerodrome hours of ops/service.
 

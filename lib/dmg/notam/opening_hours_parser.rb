@@ -9,7 +9,7 @@ module Dmg
         context[:opening_hours_table] = {}
         state = State::Start.new context
 
-        line.upcase.scan(/[A-Z]+|\d{4}-\d{4}/).each do |token|
+        line.upcase.scan(/[A-Z]+|\d+-\d+/).each do |token|
           break unless (state = state.consume_token token)
         end
 
@@ -19,13 +19,12 @@ module Dmg
 
       class Context < Hash
         def populate_opening_hours_table
-          start_weekday_idx = self.delete(State::StartWeekday)
-          end_weekday_idx = self.delete(State::EndWeekday)
-          opening_hours = self.delete(State::OpeningHours) # .each_slice(2).map { |opening_hours_tuple| opening_hours_tuple.join('-') }
+          start_weekday_idx = delete(State::StartWeekday)
+          end_weekday_idx = delete(State::EndWeekday)
+          opening_hours = delete(State::OpeningHours) # .each_slice(2).map { |opening_hours_tuple| opening_hours_tuple.join('-') }
 
           (start_weekday_idx .. end_weekday_idx).each do |weekday_index|
-            weekday = WEEKDAYS[weekday_index]
-            self[:opening_hours_table][weekday] = opening_hours
+            self[:opening_hours_table][WEEKDAYS[weekday_index]] = opening_hours
           end
         end
       end
@@ -44,7 +43,6 @@ module Dmg
           end
 
           # raise "can't find matching state for token=#{ token }) in transition #{ self.class } => #{ next_states.inspect }"
-
           return
         end
 
